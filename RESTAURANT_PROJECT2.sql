@@ -37,7 +37,13 @@ GROUP BY mi.item_name
 ORDER BY Order_Count DESC;
 
 
-/* 6. Average order value*/
+/* 6. Total revenue*/
+SELECT SUM(mi.price * COUNT(od.item_id)) AS total_revenue
+FROM order_details od
+JOIN menu_items mi ON od.item_id = mi.menu_item_id;
+
+
+/* 7. Average order value*/
 SELECT CONVERT(DECIMAL (10,2), AVG(total_price)) AS avg_order_value
 FROM (
     SELECT od.order_id, SUM(mi.price) AS total_price
@@ -47,7 +53,7 @@ FROM (
 ) AS order_totals;
 
 
-/* 7. Revenue by category*/
+/* 8. Revenue by category*/
 WITH OrderItemCounts AS 
 		( SELECT od.item_id,COUNT(*) AS item_count
 		  FROM order_details od
@@ -60,7 +66,7 @@ INNER JOIN OrderItemCounts oic ON mi.menu_item_id = oic.item_id
 GROUP BY mi.category;
 
 
-/* 8. Orders per day of the week*/
+/* 9. Orders per day of the week*/
 
 /* With case statement */
 SELECT DATENAME(WEEKDAY, order_date) AS day_of_week, COUNT(*) AS order_count
@@ -91,13 +97,13 @@ ORDER BY weekday_num ASC;
 /**/
 
 
-/* 9.Average price of each item in category*/
+/* 10.Average price of each item in category*/
 SELECT mi.category, ROUND(AVG(mi.price),2) AS Average_Price
 FROM menu_items mi
 GROUP BY mi.category;
 
 
-/* 10. Menu item by revenue*/
+/* 11. Menu item by revenue*/
 WITH ItemCounts 
 	AS ( SELECT od.item_id, COUNT(*) AS order_count
     FROM order_details od
@@ -108,6 +114,7 @@ FROM menu_items mi
 JOIN ItemCounts ic ON mi.menu_item_id = ic.item_id
 GROUP BY mi.item_name, ic.order_count, mi.price
 ORDER BY item_revenue DESC;
+
 
 
 
