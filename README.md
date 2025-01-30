@@ -58,10 +58,3 @@ The project includes a series of SQL queries designed to extract meaningful insi
 * **SQL:**  The primary language used for data manipulation and analysis.
 * **Database Management System (DBMS):**  SQL Server.
 * **GitHub:** Used for project sharing.
-
-## How to Run the Queries
-
-1. Clone the repository to your local machine.
-2. Connect to your DBMS.
-3. Import the `menu_items` and `order_details` tables into your database.
-4. Execute the SQL scripts in the project directory.
